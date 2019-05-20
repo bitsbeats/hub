@@ -160,15 +160,20 @@
                  'image': tag.image,
                  'tag': tag.tag,
                  'data': tagInfo,
-                 'gitUrl': tagInfo['container_config']['Labels']['org.label-schema.vcs-url'],
-                 'gitRef': tagInfo['container_config']['Labels']['org.label-schema.vcs-ref'],
+               }
+               if (tagInfo['container_config'] && tagInfo['container_config']['Labels']) {
+                 this.infoMap[tag.name] = Object.assign(this.infoMap[tag.name], {
+                   'gitUrl': tagInfo['container_config']['Labels']['org.label-schema.vcs-url'],
+                   'gitRef': tagInfo['container_config']['Labels']['org.label-schema.vcs-ref'],
+                 });
                }
                this.infoSortMap[`${tagInfo.created}_${tag.name}`] = tag.name;
              }
              this.tagsLoadingCount--;
              this.updateInfo();
            })
-           .catch(() => {
+           .catch((err) => {
+             console.log(err);
              this.$snackbar.open({
                duration: 2000,
                type: 'is-danger',
