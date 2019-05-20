@@ -1,8 +1,34 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-Vue.config.productionTip = false
+import App from './App.vue';
+import Buefy from 'buefy';
+import 'buefy/dist/buefy.css';
+import axios from 'axios';
+
+Vue.use(Buefy);
+Vue.use(VueRouter);
+Vue.prototype.$http = axios;
+
+// icons
+import GithubBoxIcon from "vue-material-design-icons/GithubBox.vue";
+import SourceCommitIcon from "vue-material-design-icons/SourceCommit.vue";
+Vue.component("github-box-icon", GithubBoxIcon);
+Vue.component("source-commit-icon", SourceCommitIcon);
+
+
+Vue.config.productionTip = false;
+
+const router = new VueRouter({
+  mode: 'history',
+  base: __dirname,
+  routes: [
+    {path: '/image/:image', component: App},
+    {path: '/tag/:image/:tag', component: App},
+  ],
+});
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+  router,
+}).$mount('#app');
