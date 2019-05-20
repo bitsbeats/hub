@@ -3,7 +3,7 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">Image Hub</h1>
-        <h2 class="subtitle">Hero subtitle</h2>
+        <h2 class="subtitle">registry browser</h2>
       </div>
     </div>
     <b-input v-model="search" placeholder="Search"></b-input>
