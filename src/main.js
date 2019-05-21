@@ -5,16 +5,23 @@ import App from './App.vue';
 import Buefy from 'buefy';
 import 'buefy/dist/buefy.css';
 import axios from 'axios';
+import ClipBoard from 'clipboard';
 
 Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.prototype.$http = axios;
+Vue.prototype.$clip = new ClipBoard('.copy', {});
+Vue.prototype.$registry = process.env.VUE_APP_REGISTRY || 'http://localhost:5000';
 
 // icons
 import GithubBoxIcon from "vue-material-design-icons/GithubBox.vue";
 import SourceCommitIcon from "vue-material-design-icons/SourceCommit.vue";
+import ContentCopyIcon from "vue-material-design-icons/ContentCopy.vue";
+import "vue-material-design-icons/styles.css";
+
 Vue.component("github-box-icon", GithubBoxIcon);
 Vue.component("source-commit-icon", SourceCommitIcon);
+Vue.component("content-copy-icon", ContentCopyIcon);
 
 
 Vue.config.productionTip = false;

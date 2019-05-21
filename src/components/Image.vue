@@ -8,10 +8,12 @@
               <b-table-column v-if="taglen" field="taglen" label="Tags">
                 {{ props.row.tags }}
               </b-table-column>
-              <b-table-column v-if="gitcols" field="git" label="Git">
-                  <a target="_blank" v-if="props.row.gitUrl" :href="props.row.gitUrl"><github-box-icon /></a> 
-                  <span v-else>no label</span>
-                  <a target="_blank" v-if="props.row.gitRef && props.row.gitRef.length == 40" :href="`${props.row.gitUrl.replace(/.git$/, '')}/commit/${props.row.gitRef}`"><source-commit-icon /></a>
+              <b-table-column v-if="gitcols || copy" field="actions" label="Actions">
+                  <a class="button is-small" target="_blank" v-if="props.row.gitUrl" :href="props.row.gitUrl"><github-box-icon /></a> 
+                  <a class="button is-small" target="_blank" v-if="props.row.gitRef && props.row.gitRef.length == 40" :href="`${props.row.gitUrl.replace(/.git$/, '')}/commit/${props.row.gitRef}`"><source-commit-icon /></a>
+                  <b-button v-if="copy" class="copy is-small is-info" :data-clipboard-text="`${$registry}/${props.row.name}`">
+                      <content-copy-icon />
+                  </b-button>
               </b-table-column>
           </template>
       </b-table>
@@ -48,6 +50,10 @@
        default: () => [],
      },
      gitcols: {
+       type: Boolean,
+       default: () => false,
+     },
+     copy: {
        type: Boolean,
        default: () => false,
      },

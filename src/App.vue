@@ -3,7 +3,7 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">Image Hub</h1>
-        <h2 class="subtitle">registry browser</h2>
+        <h2 class="subtitle">[{{ $registry }}] browser</h2>
       </div>
     </div>
     <b-input v-model="search" placeholder="Search"></b-input>
@@ -21,7 +21,7 @@
                 <b-button class="button" type="is-danger" size="is-small" @click="deleteTag">Delete {{ tagsChecked.length }} tags</b-button>
                 <b-button class="button" size="is-small" @click="() => {this.tagsChecked = []}">Clear</b-button>
             </p>
-            <bb-image :images="sortedTags" :select="tagSelect" :loading="tagsLoading" :checkable="true" :checked.sync="tagsChecked" :gitcols="true" />
+            <bb-image :images="sortedTags" :select="tagSelect" :loading="tagsLoading" :checkable="true" :checked.sync="tagsChecked" :gitcols="true" :copy="true" />
         </b-tab-item>
         <b-tab-item label="Info" :visible="infoTabVisible">
             <bb-info :info="infoData" />
@@ -92,7 +92,7 @@
                        queue: false,
                      })
                    })
-                   .catch((err) => {
+                   .catch(() => {
                      this.$snackbar.open({
                        duration: 2000,
                        type: 'is-danger',
@@ -101,7 +101,7 @@
                      })
                    });
              })
-             .catch((err) => {
+             .catch(() => {
                this.$snackbar.open({
                  duration: 2000,
                  type: 'is-danger',
@@ -172,8 +172,7 @@
              this.tagsLoadingCount--;
              this.updateInfo();
            })
-           .catch((err) => {
-             console.log(err);
+           .catch(() => {
              this.$snackbar.open({
                duration: 2000,
                type: 'is-danger',
@@ -231,8 +230,16 @@
      },
    },
    mounted() {
-     this.loadImages();
      this.$router.push('/');
+     this.$clip.on('success', () => {
+       this.$snackbar.open({
+         duration: 2000,
+         type: 'is-success',
+         message: `copied.`,
+         queue: false,
+       })
+     });
+     this.loadImages();
    },
    computed: {
      filteredImages() {
