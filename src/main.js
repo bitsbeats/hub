@@ -11,7 +11,7 @@ Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.prototype.$http = axios;
 Vue.prototype.$clip = new ClipBoard('.copy', {});
-Vue.prototype.$registry = process.env.VUE_APP_REGISTRY || 'http://localhost:5000';
+Vue.prototype.$registry = process.env.VUE_APP_REGISTRY || '';
 
 // icons
 import GithubBoxIcon from "vue-material-design-icons/GithubBox.vue";

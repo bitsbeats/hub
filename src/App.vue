@@ -63,6 +63,7 @@ export default {
   },
   data() {
     return {
+      registry: "",
       activeTab: 0,
       search: "",
 
@@ -273,6 +274,15 @@ export default {
     }
   },
   mounted() {
+    if (this.$registry == '__REPLACED_BY_SED_DURING_RUNTIME__') {
+      this.$http.get('/config/registry.json')
+        .then(({data}) => {
+          this.registry = data.registry;
+        });
+    } else {
+      this.registry = this.$registry;
+    }
+    this.registry = this.$registry ||
     this.$router.push("/");
     this.$clip.on("success", () => {
       this.$snackbar.open({
